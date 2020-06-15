@@ -90,3 +90,43 @@ gmat :=function(X,n)
 	fi;
 
 end;
+
+# Computes the matrices of the w_i for the default base {e_1, ..., e_2} of Q^n
+# Input: An n x n matrix representing a graph as above
+glin := function(mat)
+	local n, w_i, matrices, e_j, k, i, j, e_i, row;
+
+	n := Length(mat); # Dimension of the quadratic matrix
+
+	matrices := []; # Array containing the matrices for the w_i
+
+	for i in [1..n] do
+		w_i := []; # Matrix for linear function w_i
+
+		for k in [1..n] do
+			row := []; # Row of w_i matrix
+
+			for j in [1..n] do
+				if k = j then
+					e_j := 1;
+				else
+					e_j := 0;
+				fi;
+
+				if k = i then
+					e_i := 1;
+				else
+					e_i := 0;
+				fi;
+
+				row[j] := e_j - mat[i][j] * e_i;
+			od;
+			w_i[k] := row;
+		od;
+
+		matrices[i] := w_i;
+	od;
+
+	return matrices;
+
+end;
