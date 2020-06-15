@@ -130,3 +130,48 @@ glin := function(mat)
 	return matrices;
 
 end;
+
+# Computes the set phi as defined in the exercise
+# Input: An array containing the matrices of the n linear functions w_i
+gphi := function(matrices)
+	local phi, e_i, i, n, j, last_count, ph;
+
+	n := Length(matrices); # Count of linear functions
+
+	phi := Set([]);
+
+	# Initialize phi with e_i
+	for i in [1..n] do
+		e_i := [];
+
+		for j in [1..n] do
+			if i = j then
+				e_i[j] := 1;
+			else
+				e_i[j] := 0;
+			fi;		
+		od;
+		
+		AddSet(phi, e_i);
+
+	od;
+
+	last_count := Length(phi); # Monitoring the count of phi
+
+	while true do
+		for ph in Iterator(phi) do
+			for j in [1..n] do
+				AddSet(phi, matrices[j] * ph);	
+			od;
+		od;
+
+		if last_count = Length(phi) then
+			break;
+		else
+			last_count := Length(phi);
+		fi;
+	od;
+
+	return phi;
+
+end;
