@@ -8,6 +8,10 @@ _grel := function(X, n, i, j)
 		if 1 = AbsInt(i-j) then # If i/j are next to each other, they're connected, else not (multiple connections don't occur here)
 			return -1;
 		fi;
+	elif X = 'E' then
+		if (i = 1 and j = 3) or (i = 3 and j = 1) or (i = 2 and j = 4) or (i = 4 and j = 2) or (1 = AbsInt(i-j) and not ( (i = 1 and j = 2) or (i = 2 and j = 1) or (i = 2 and j = 3) or (i = 3 and j = 2))) then
+			return -1;
+		fi;
 	fi;
 
 	return 0; # No connection between j and j
