@@ -179,17 +179,26 @@ end;
 # Computes the set w by multiplying every element with every element as long as that creates new elements
 # Input: An array containing the matrices of the n linear functions w_i
 gw := function(matrices)
-	local w, w1, w2, old_length ;
+	local w, w1, w2, old_length, cache, arr, prod;
 
 	w:= Set(matrices);
 
 	old_length := Length(w);
 
+	cache := Set([]); # Stores the factors for the computation of the matrix product for performance reasons
+
 	while true do
 
 		for w1 in Iterator(w) do
 			for w2 in Iterator(w) do
-				AddSet(w, w1*w2);	
+				arr := [w1, w2];
+
+				if not arr in cache then
+					prod := w1*w2;
+					AddSet(w, prod);
+					AddSet(cache, arr);		
+				fi;
+	
 			od;
 		od;
 
