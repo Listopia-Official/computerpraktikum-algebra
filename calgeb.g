@@ -175,3 +175,31 @@ gphi := function(matrices)
 	return phi;
 
 end;
+
+# Computes the set w by multiplying every element with every element as long as that creates new elements
+# Input: An array containing the matrices of the n linear functions w_i
+gw := function(matrices)
+	local w, w1, w2, old_length ;
+
+	w:= Set(matrices);
+
+	old_length := Length(w);
+
+	while true do
+
+		for w1 in Iterator(w) do
+			for w2 in Iterator(w) do
+				AddSet(w, w1*w2);	
+			od;
+		od;
+
+		if old_length = Length(w) then
+			break;
+		else
+			old_length := Length(w);
+		fi;
+
+	od;
+
+	return w;
+end;
