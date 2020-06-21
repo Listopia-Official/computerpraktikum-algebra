@@ -180,38 +180,31 @@ gphi := function(matrices)
 
 end;
 
-# Computes the set w by multiplying every element with every element as long as that creates new elements
+# Computes the set w by multiplying every new element of the last step with every element.
 # Input: An array containing the matrices of the n linear functions w_i
 gw := function(matrices)
-	local w, w1, w2, old_length, cache, arr, prod;
+	local w, w1, w2, prod, additions, newAdditions;
 
 	w:= Set(matrices);
 
-	old_length := Length(w);
+    additions = Immutable(w);
+    newAdditions = Set([0]);
 
-	cache := Set([]); # Stores the factors for the computation of the matrix product for performance reasons
+	while not Length(additions) = 0 do
 
-	while true do
 
-		for w1 in Iterator(w) do
+		for w1 in Iterator(additions) do
 			for w2 in Iterator(w) do
-				arr := [w1, w2];
 
-				if not arr in cache then
-					prod := w1*w2;
-					AddSet(w, prod);
-					AddSet(cache, arr);		
-				fi;
-	
+				prod := w1*w2;
+                if not prod in w then
+				    AddSet(w, prod);
+				    AddSet(newAdditions, prod);
 			od;
 		od;
 
-		if old_length = Length(w) then
-			break;
-		else
-			old_length := Length(w);
-		fi;
-
+		additions := Immutable(newAdditions);
+		newAdditions := Set([]);
 	od;
 
 	return w;
