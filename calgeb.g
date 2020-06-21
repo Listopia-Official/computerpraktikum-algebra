@@ -1,6 +1,6 @@
-valid_graphs := ['A', 'B', 'C', 'D', 'E', 'F', 'G']; # Valid graph letters
-graph_min_n := [1, 2, 2, 4, 6, 4, 2]; # Min n for the graphs
-graph_max_n := [-1, -1, -1, -1, 8, 4, 2]; # Max n for the graphs
+valid_graphs := ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'Z']; # Valid graph letters
+graph_min_n := [1, 2, 2, 4, 6, 4, 2, 3]; # Min n for the graphs
+graph_max_n := [-1, -1, -1, -1, 8, 4, 2, 3]; # Max n for the graphs
 
 # Internal function, no input validation done
 _grel := function(X, n, i, j)
@@ -33,6 +33,10 @@ _grel := function(X, n, i, j)
 			return -1;
 		else
 			return -3;
+		fi;
+	elif X = 'Z' then
+		if (i = 1 and j = 2) or (i = 2 and j = 1) or (i = 1 and j = 3) or (i = 3 and j = 1) or (i = 2 and j = 3) or (i = 3 and j = 2) then
+			return -1;
 		fi;
 	fi;
 
