@@ -187,11 +187,10 @@ gw := function(matrices)
 
 	w:= Set(matrices);
 
-    additions = Immutable(w);
-    newAdditions = Set([0]);
+    additions := Immutable(w);
+    newAdditions := Set([]);
 
 	while not Length(additions) = 0 do
-
 
 		for w1 in Iterator(additions) do
 			for w2 in Iterator(w) do
@@ -200,6 +199,7 @@ gw := function(matrices)
                 if not prod in w then
 				    AddSet(w, prod);
 				    AddSet(newAdditions, prod);
+				fi;
 			od;
 		od;
 
